@@ -13,6 +13,7 @@ namespace CatGPT
         [SerializeField] private int requestedWidth = 640;
         [SerializeField] private int requestedHeight = 480;
         [SerializeField] private int requestedFPS = 30;
+        [SerializeField] [Range(1, 100)] private int jpegQuality = 75; // Quality for JPEG encoding (75 is a good balance)
         
         public bool IsInitialized { get; private set; }
         
@@ -71,7 +72,7 @@ namespace CatGPT
             Texture2D frame = CaptureFrame();
             if (frame == null) return null;
             
-            byte[] imageBytes = frame.EncodeToJPG(75);
+            byte[] imageBytes = frame.EncodeToJPG(jpegQuality);
             Destroy(frame);
             
             return Convert.ToBase64String(imageBytes);

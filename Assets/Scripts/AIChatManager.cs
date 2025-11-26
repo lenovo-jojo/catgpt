@@ -55,6 +55,22 @@ namespace CatGPT
             {
                 conversationHistory.Add(new ChatMessage("system", config.systemPrompt));
             }
+            else
+            {
+                Debug.LogWarning("AIChatManager: AIConfig is not assigned. Please assign it in the Inspector.");
+            }
+        }
+        
+        /// <summary>
+        /// Set the AI configuration (can be called programmatically)
+        /// </summary>
+        public void SetConfig(AIConfig newConfig)
+        {
+            config = newConfig;
+            if (config != null && conversationHistory.Count == 0)
+            {
+                conversationHistory.Add(new ChatMessage("system", config.systemPrompt));
+            }
         }
         
         /// <summary>
@@ -77,7 +93,8 @@ namespace CatGPT
             };
             
             string jsonData = JsonUtility.ToJson(request);
-            // Manual JSON construction for array support
+            // Manual JSON construction for array support (Unity's JsonUtility doesn't support arrays at root level)
+            // TODO: Consider using a proper JSON library like Newtonsoft.Json for production
             jsonData = "{\"model\":\"" + config.model + "\",\"messages\":[";
             for (int i = 0; i < conversationHistory.Count; i++)
             {

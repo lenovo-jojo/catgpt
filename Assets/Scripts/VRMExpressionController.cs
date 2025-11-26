@@ -122,23 +122,49 @@ namespace CatGPT
         
         /// <summary>
         /// Trigger expression based on emotion keyword
+        /// Optimized keyword matching with early returns
         /// </summary>
         public void TriggerExpressionFromKeyword(string keyword)
         {
-            keyword = keyword.ToLower();
+            string lowerKeyword = keyword.ToLower();
             
-            if (keyword.Contains("happy") || keyword.Contains("joy") || keyword.Contains("glad"))
+            // Check for happy keywords
+            if (lowerKeyword.Contains("happy") || lowerKeyword.Contains("joy") || lowerKeyword.Contains("glad"))
+            {
                 SetExpression(VRMExpression.Happy);
-            else if (keyword.Contains("sad") || keyword.Contains("sorry") || keyword.Contains("unfortunate"))
+                return;
+            }
+            
+            // Check for sad keywords
+            if (lowerKeyword.Contains("sad") || lowerKeyword.Contains("sorry") || lowerKeyword.Contains("unfortunate"))
+            {
                 SetExpression(VRMExpression.Sad);
-            else if (keyword.Contains("angry") || keyword.Contains("mad") || keyword.Contains("upset"))
+                return;
+            }
+            
+            // Check for angry keywords
+            if (lowerKeyword.Contains("angry") || lowerKeyword.Contains("mad") || lowerKeyword.Contains("upset"))
+            {
                 SetExpression(VRMExpression.Angry);
-            else if (keyword.Contains("surprise") || keyword.Contains("wow") || keyword.Contains("amazing"))
+                return;
+            }
+            
+            // Check for surprised keywords
+            if (lowerKeyword.Contains("surprise") || lowerKeyword.Contains("wow") || lowerKeyword.Contains("amazing"))
+            {
                 SetExpression(VRMExpression.Surprised);
-            else if (keyword.Contains("fun") || keyword.Contains("enjoy") || keyword.Contains("exciting"))
+                return;
+            }
+            
+            // Check for fun keywords
+            if (lowerKeyword.Contains("fun") || lowerKeyword.Contains("enjoy") || lowerKeyword.Contains("exciting"))
+            {
                 SetExpression(VRMExpression.Fun);
-            else
-                SetExpression(VRMExpression.Neutral);
+                return;
+            }
+            
+            // Default to neutral
+            SetExpression(VRMExpression.Neutral);
         }
         
         /// <summary>

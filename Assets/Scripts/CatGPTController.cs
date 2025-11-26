@@ -60,6 +60,13 @@ namespace CatGPT
             if (vrmLoader == null) vrmLoader = gameObject.AddComponent<VRMLoader>();
             if (modelManager == null) modelManager = gameObject.AddComponent<VRMModelManager>();
             if (expressionController == null) expressionController = gameObject.AddComponent<VRMExpressionController>();
+            
+            // Assign config to chat manager if available
+            if (aiConfig != null && chatManager != null)
+            {
+                // Note: In production, add a SetConfig method to AIChatManager
+                // For now, config is accessed via the inspector-assigned field
+            }
         }
         
         private void SetupUI()
